@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atoms Code - Desenvolvimento de Sistemas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="icon" type="image/png" href="logo/logowhite.png" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap");
+
+      * {
+        font-family: "Inter", sans-serif;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-dark: #0a0a0f;
+        --secondary-dark: #1a1a2e;
+        --accent-cyan: #00d4ff;
+        --accent-purple: #6c5ce7;
+        --accent-pink: #fd79a8;
+        --accent-green: #00b894;
+        --accent-blue: #0984e3;
+        --text-primary: #ffffff;
+        --text-secondary: #a0a0a0;
+        --duration: 0.7s;
+      }
+
+      body {
+        margin: 0;
+        background: var(--primary-dark);
+        min-height: 100vh;
+        color: var(--text-primary);
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Advanced Background Effect */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 20% 80%,
+            rgba(253, 121, 168, 0.2) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(108, 92, 231, 0.3) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(253, 121, 168, 0.2) 0%,
+            transparent 50%
+          );
+        z-index: -2;
+        animation: backgroundShift 20s ease-in-out infinite;
+      }
+
+      @keyframes backgroundShift {
+        0%,
+        100% {
+          background: radial-gradient(
+              circle at 20% 80%,
+              rgba(0, 212, 255, 0.3) 0%,
+              transparent 50%
+            ),
+            radial-gradient(
+              circle at 80% 20%,
+              rgba(108, 92, 231, 0.3) 0%,
+              transparent 50%
+            ),
+            radial-gradient(
+              circle at 40% 40%,
+              rgba(253, 121, 168, 0.2) 0%,
+              transparent 50%
+            );
+        }
+        33% {
+          background: radial-gradient(
+              circle at 60% 30%,
+              rgba(253, 121, 168, 0.2) 0%,
+              transparent 50%
+            ),
+            radial-gradient(
+              circle at 30% 70%,
+              rgba(0, 212, 255, 0.3) 0%,
+              transparent 50%
+            ),
+            radial-gradient(
+              circle at 70% 60%,
+              rgba(108, 92, 231, 0.3) 0%,
+              transparent 50%
+            );
+        }
+        66% {
+          background: radial-gradient(
+              circle at 80% 60%,
+              rgba(108, 92, 231, 0.3) 0%,
+              transparent 50%
+            ),
+            radial-gradient(
+              circle at 20% 40%,
+              rgba(0, 212, 255, 0.3) 0%,
+              transparent 50%
+            ),
+            radial-gradient(
+              circle at 50% 80%,
+              rgba(253, 121, 168, 0.2) 0%,
+              transparent 50%
+            );
+        }
+      }
+
+      .gradient-bg {
+        background: linear-gradient(
+          135deg,
+          var(--accent-cyan) 0%,
+          var(--accent-purple) 100%
+        );
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-5px);
+      }
+
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+      }
+
+      .floating {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .typing-container {
+        display: inline-block;
+      }
+
+      .typing-letter {
+        display: inline-block;
+        opacity: 0;
+        transform: translateX(-100px);
+        animation: slideIn 0.5s ease-out forwards;
+      }
+
+      @keyframes slideIn {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* Modern Navigation Styles */
+      .main-nav {
+        position: relative;
+        background: rgba(26, 26, 46, 0.8);
+        backdrop-filter: blur(15px);
+        border-radius: 50px;
+        padding: 8px 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(0, 212, 255, 0.2);
+      }
+
+      .nav-list {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        gap: 8px;
+        position: relative;
+      }
+
+      .nav-link {
+        display: block;
+        padding: 12px 24px;
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        border-radius: 25px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        z-index: 2;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-family: "Inter", sans-serif;
+      }
+
+      .nav-link:hover {
+        color: var(--accent-cyan);
+        transform: translateY(-2px);
+        text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+      }
+
+      .nav-link.active {
+        color: var(--text-primary);
+      }
+
+      .nav-indicator {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        height: calc(100% - 16px);
+        background: linear-gradient(
+          135deg,
+          var(--accent-cyan) 0%,
+          var(--accent-purple) 50%,
+          var(--accent-pink) 100%
+        );
+        border-radius: 25px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1;
+        box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4),
+          0 0 0 1px rgba(255, 255, 255, 0.1);
+      }
+
+      /* Mobile Menu Button */
+      .mobile-menu-btn {
+        position: relative;
+        width: 48px;
+        height: 48px;
+        background: rgba(26, 26, 46, 0.8);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(0, 212, 255, 0.2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .mobile-menu-btn:hover {
+        border-color: rgba(0, 212, 255, 0.4);
+        box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+      }
+
+      .hamburger-lines {
+        position: relative;
+        width: 24px;
+        height: 18px;
+      }
+
+      .line {
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(
+          135deg,
+          var(--accent-cyan) 0%,
+          var(--accent-purple) 100%
+        );
+        border-radius: 2px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .line1 {
+        top: 0;
+      }
+      .line2 {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .line3 {
+        bottom: 0;
+      }
+
+      .mobile-menu-btn.active .line1 {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .mobile-menu-btn.active .line2 {
+        opacity: 0;
+        transform: translateY(-50%) scale(0);
+      }
+
+      .mobile-menu-btn.active .line3 {
+        transform: rotate(-45deg) translate(7px, -6px);
+      }
+
+      /* Mobile Sidebar */
+      .mobile-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        background: linear-gradient(
+          180deg,
+          rgba(26, 26, 46, 0.95) 0%,
+          rgba(10, 10, 15, 0.95) 100%
+        );
+        backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(0, 212, 255, 0.2);
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+      }
+
+      .mobile-sidebar.active {
+        transform: translateX(0);
+      }
+
+      .sidebar-content {
+        padding: 2rem 1.5rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar-header {
+        border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+        padding-bottom: 1.5rem;
+      }
+
+      .sidebar-nav {
+        flex: 1;
+        padding-top: 2rem;
+      }
+
+      .mobile-nav-link {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        gap: 12px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .mobile-nav-link::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          var(--accent-cyan) 0%,
+          var(--accent-purple) 100%
+        );
+        transition: width 0.3s ease;
+        z-index: -1;
+        opacity: 0.1;
+      }
+
+      .mobile-nav-link:hover::before,
+      .mobile-nav-link.active::before {
+        width: 100%;
+      }
+
+      .mobile-nav-link:hover,
+      .mobile-nav-link.active {
+        color: var(--accent-cyan);
+        background: rgba(0, 212, 255, 0.1);
+        border-left: 3px solid var(--accent-cyan);
+        padding-left: calc(1rem - 3px);
+        text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+      }
+
+      .mobile-nav-link svg {
+        flex-shrink: 0;
+      }
+
+      /* Mobile Sidebar Overlay */
+      .mobile-sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+
+      .mobile-sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .section-spacing {
+        padding: 4rem 0;
+      }
+
+      /* Fixed Header Styles */
+      header {
+        transition: all 0.3s ease-in-out;
+      }
+
+      header.scrolled {
+        backdrop-filter: blur(10px);
+      }
+
+      /* Ensure proper spacing for fixed header */
+      body {
+        scroll-behavior: smooth;
+      }
+
+      @media screen and (max-width: 50em) {
+        .menu {
+          font-size: 0.8em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Main Container -->
+    <div class="min-h-screen relative overflow-hidden">
+      <!-- Header with Logo and Menu -->
+      <header
+        class="fixed top-0 left-0 right-0 flex justify-between items-center p-6 z-50 -gradient-to-r from-slate-900/60 to-slate-800/60 backdrop-blur-lg"
+      >
+        <!-- Logo Section -->
+        <div class="flex items-center space-x-4">
+          <img
+            class="h-16 w-16"
+            src="logo/logowhite.png"
+            alt="Atoms Code Logo"
+          />
+          <div class="flex flex-col">
+            <h1 class="text-2xl md:text-3xl font-bold text-white">
+              Atoms Code
+            </h1>
+            <p class="text-sm md:text-base text-gray-300">
+              Desenvolvimento de Software
+            </p>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Menu -->
+        <nav class="main-nav hidden md:block">
+          <ul class="nav-list">
+            <li>
+              <a href="#home" class="nav-link active" data-section="home"
+                >Início</a
+              >
+            </li>
+            <li>
+              <a href="#services" class="nav-link" data-section="services"
+                >Serviços</a
+              >
+            </li>
+            <li>
+              <a href="#portfolio" class="nav-link" data-section="portfolio"
+                >Portfólio</a
+              >
+            </li>
+            <li>
+              <a href="#contact" class="nav-link" data-section="contact"
+                >Contato</a
+              >
+            </li>
+          </ul>
+          <div class="nav-indicator"></div>
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn md:hidden" id="mobileMenuBtn">
+          <div class="flex hamburger-lines">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+          </div>
+        </button>
+      </header>
+
+      <!-- Mobile Sidebar Menu -->
+      <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-content">
+          <div class="sidebar-header">
+            <div class="flex items-center space-x-3 mb-8">
+              <img
+                class="h-10 w-10"
+                src="logo/logowhite.png"
+                alt="Atoms Code Logo"
+              />
+              <div class="flex flex-col">
+                <h2 class="text-lg font-bold text-white">Atoms Code</h2>
+                <p class="text-xs text-slate-400">
+                  Desenvolvimento de Software
+                </p>
+              </div>
+            </div>
+          </div>
+          <nav class="sidebar-nav">
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#home"
+                  class="mobile-nav-link active"
+                  data-section="home"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                    ></path>
+                  </svg>
+                  <span>Início</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#services"
+                  class="mobile-nav-link"
+                  data-section="services"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                    ></path>
+                  </svg>
+                  <span>Serviços</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#portfolio"
+                  class="mobile-nav-link"
+                  data-section="portfolio"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                    ></path>
+                  </svg>
+                  <span>Portfólio</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#contact"
+                  class="mobile-nav-link"
+                  data-section="contact"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    ></path>
+                  </svg>
+                  <span>Contato</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Mobile Sidebar Overlay -->
+      <div class="mobile-sidebar-overlay" id="mobileSidebarOverlay"></div>
+
+      <!-- Particles Background -->
+      <div id="particles" class="absolute inset-0 z-0"></div>
+
+      <!-- Hero Section -->
+      <section
+        id="home"
+        class="relative flex items-center justify-center min-h-screen px-4 pt-24"
+      >
+        <div class="relative z-10 max-w-7xl mx-auto text-center text-white">
+          <h1
+            class="text-[50px] md:text-6xl lg:text-7xl font-bold mb-6 floating leading-tight"
+          >
+            <span id="typingText1" class="typing-container block"></span>
+            <span id="typingText2" class="typing-container block mt-2"></span>
+          </h1>
+          <p
+            class="text-lg md:text-xl lg:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto opacity-0"
+            id="subtitle"
+          >
+            Desenvolvimento de sistemas personalizados para impulsionar seu
+            negócio
+          </p>
+          <div
+            class="flex flex-col sm:flex-row gap-4 justify-center opacity-0"
+            id="buttons"
+          >
+            <button
+              onclick="redirectToWpp()"
+              class="bg-gradient-to-r from-cyan-400 to-purple-500 text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition text-base shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40"
+            >
+              Solicitar Orçamento
+            </button>
+            <button
+              onclick="scrollToSection('portfolio')"
+              class="border-2 border-cyan-400 text-cyan-400 px-8 py-4 rounded-lg font-semibold hover:bg-cyan-400/10 transition text-base"
+            >
+              Ver Portfólio
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Section -->
+      <section id="services" class="section-spacing relative z-10 pt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <div class="text-center mb-16 fade-in">
+            <h2 class="text-4xl lg:text-5xl font-bold text-white mb-4">
+              Nossos Serviços
+            </h2>
+            <p class="text-lg lg:text-xl text-gray-300 px-4">
+              Soluções completas para suas necessidades digitais
+            </p>
+          </div>
+
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+          >
+            <div
+              class="fade-in card-hover bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-lg border border-cyan-500/20 p-8 rounded-xl shadow-2xl hover:border-cyan-400/40 transition-all duration-300"
+            >
+              <div
+                class="w-16 h-16 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center mb-6 shadow-lg shadow-cyan-500/25"
+              >
+                <svg
+                  class="w-8 h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-white mb-4">
+                Desenvolvimento Web
+              </h3>
+              <p class="text-base text-slate-300">
+                Criamos sites e aplicações web modernas, responsivas e
+                performáticas usando as tecnologias mais atuais do mercado.
+              </p>
+            </div>
+
+            <div
+              class="fade-in card-hover bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-lg border border-indigo-500/20 p-8 rounded-xl shadow-2xl hover:border-indigo-400/40 transition-all duration-300"
+            >
+              <div
+                class="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mb-6 shadow-lg shadow-indigo-500/25"
+              >
+                <svg
+                  class="w-8 h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M2 5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-7v2h3a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2h3v-2H4a2 2 0 0 1-2-2V5zm18 11V5H4v11h16z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-white mb-4">
+                Desenvolvimento de Sistemas
+              </h3>
+              <p class="text-base text-slate-300">
+                Desenvolvemos sistemas personalizados, com foco total em
+                satisfazer o cliente com o melhor design e performance.
+              </p>
+            </div>
+
+            <div
+              class="fade-in card-hover bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-lg border border-purple-500/20 p-8 rounded-xl shadow-2xl hover:border-purple-400/40 transition-all duration-300"
+            >
+              <div
+                class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-6 shadow-lg shadow-purple-500/25"
+              >
+                <svg
+                  class="w-8 h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-white mb-4">Apps Mobile</h3>
+              <p class="text-base text-slate-300">
+                Desenvolvemos aplicativos Web híbridos para iOS e Android com
+                design intuitivo e alta performance.
+              </p>
+            </div>
+
+            <div
+              class="fade-in card-hover bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-lg border border-blue-500/20 p-8 rounded-xl shadow-2xl hover:border-blue-400/40 transition-all duration-300"
+            >
+              <div
+                class="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center mb-6 shadow-lg shadow-blue-500/25"
+              >
+                <svg
+                  class="w-8 h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-white mb-4">Host Solutions</h3>
+              <p class="text-base text-slate-300">
+                Implementamos soluções de hospedagem escaláveis e seguras para
+                otimizar sua infraestrutura e reduzir custos.
+              </p>
+            </div>
+
+            <div
+              class="fade-in card-hover bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-lg border border-emerald-500/20 p-8 rounded-xl shadow-2xl hover:border-emerald-400/40 transition-all duration-300"
+            >
+              <div
+                class="w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/25"
+              >
+                <svg
+                  class="w-8 h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-white mb-4">UI/UX Design</h3>
+              <p class="text-base text-slate-300">
+                Criamos interfaces intuitivas e experiências memoráveis focadas
+                nas necessidades dos seus usuários.
+              </p>
+            </div>
+
+            <div
+              class="fade-in card-hover bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-lg border border-pink-500/20 p-8 rounded-xl shadow-2xl hover:border-pink-400/40 transition-all duration-300"
+            >
+              <div
+                class="w-16 h-16 bg-gradient-to-r from-pink-500 to-rose-500 rounded-lg flex items-center justify-center mb-6 shadow-lg shadow-pink-500/25"
+              >
+                <svg
+                  class="w-8 h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-white mb-4">Segurança</h3>
+              <p class="text-base text-slate-300">
+                Garantimos a proteção dos seus dados com as melhores práticas de
+                segurança e compliance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Portfolio Section -->
+      <section id="portfolio" class="section-spacing relative z-10 pt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <div class="text-center mb-16 fade-in">
+            <h2 class="text-4xl lg:text-5xl font-bold text-white mb-4">
+              Projetos em Destaque
+            </h2>
+            <p class="text-lg lg:text-xl text-gray-300 px-4">
+              Conheça algumas de nossas soluções desenvolvidas
+            </p>
+          </div>
+
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+          >
+            <div
+              class="fade-in card-hover bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-lg border border-cyan-500/20 rounded-xl overflow-hidden shadow-2xl hover:border-cyan-400/40 transition-all duration-300"
+            >
+              <div
+                class="h-48 bg-gradient-to-r from-cyan-400 to-blue-500 relative overflow-hidden"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                >
+                  <img src="images/vgled.png" alt="" />
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white mb-2">
+                  Site Institucional
+                </h3>
+                <p class="text-base text-slate-300 mb-4">
+                  Site criado para divulgar serviços e capturar leads de uma
+                  empresa.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="px-3 py-1 bg-blue-500 rounded-full text-sm border border-blue-500"
+                    >HTML</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-blue-500 rounded-full text-sm border border-blue-500"
+                    >TailwindCss</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="fade-in card-hover bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-lg border border-purple-500/20 rounded-xl overflow-hidden shadow-2xl hover:border-purple-400/40 transition-all duration-300"
+            >
+              <div
+                class="h-48 bg-gradient-to-r from-purple-500 to-indigo-600 relative overflow-hidden"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                >
+                  <img src="images/gestao.png" alt="" />
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white mb-2">
+                  Sistema de Gestão
+                </h3>
+                <p class="text-base text-slate-300 mb-4">
+                  Sistema de gestão customizado para gerenciamento empresarial
+                  com dashboards em real time.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm border border-purple-500/30"
+                    >React</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm border border-purple-500/30"
+                    >Node.js</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="fade-in card-hover bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-lg border border-pink-500/20 rounded-xl overflow-hidden shadow-2xl hover:border-pink-400/40 transition-all duration-300"
+            >
+              <div
+                class="h-48 bg-gradient-to-r from-pink-500 to-rose-500 relative overflow-hidden"
+              >
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                >
+                  <img src="images/pjt-barba-branca.png" alt="" />
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white mb-2">
+                  App de Barbearia
+                </h3>
+                <p class="text-base text-slate-300 mb-4">
+                  Aplicativo web para gestão de barbearia com dashboards e
+                  relatórios.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="px-3 py-1 bg-pink-500/20 text-pink-300 rounded-full text-sm border border-pink-500/30"
+                    >React</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-pink-500/20 text-pink-300 rounded-full text-sm border border-pink-500/30"
+                    >Node.js</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center mt-6">
+            <button
+              onclick="redirectToPort()"
+              class="w-[300px] border-b border-slate-700 pb-4 bg-gradient-to-r from-slate-300/60 to-cyan-400/60 text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition text-base shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40"
+            >
+              Ver mais
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="section-spacing relative z-10 pt-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+          <div class="text-center mb-16 fade-in">
+            <h2 class="text-4xl lg:text-5xl font-bold text-white mb-4">
+              Vamos Conversar?
+            </h2>
+            <p class="text-lg lg:text-xl text-gray-300 px-4">
+              Entre em contato e transforme sua ideia em realidade
+            </p>
+
+            <button
+              onclick="redirectToWpp()"
+              class="mt-4 lg:w-[300px] bg-gradient-to-r from-cyan-400 to-purple-500 text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition text-base shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40"
+            >
+              Solicitar Orçamento
+            </button>
+          </div>
+          <div
+            class="flex justify-center space-y-6 sm:space-y-8"
+            data-aos="fade-right"
+            data-aos-duration="800"
+          >
+            <div
+              class="fade-in card-hover bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-lg border border-cyan-500/20 rounded-xl overflow-hidden shadow-2xl hover:border-cyan-400/40 transition-all duration-300 w-max dark:bg-surface/40 backdrop-blur-xl p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-gray-200 dark:border-surface"
+            >
+              <h3 class="text-xl sm:text-2xl font-bold mb-6 text-center">
+                Informações de Contato
+              </h3>
+
+              <div class="items-center space-y-4 sm:space-y-6">
+                <div class="flex items-center space-x-4 group">
+                  <div
+                    class="w-10 h-10 sm:w-12 sm:h-12 bg-secondary/10 rounded-full flex items-center justify-center group-hover:bg-secondary/20 transition-colors touch-action-manipulation"
+                  >
+                    <i class="fas fa-envelope text-secondary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-sm sm:text-base">Email</h4>
+                    <p
+                      class="text-gray-600 dark:text-gray-400 text-sm sm:text-base"
+                    >
+                      fevangelista439@gmail.com
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-center space-x-4 group">
+                  <div
+                    class="w-10 h-10 sm:w-12 sm:h-12 bg-secondary/10 rounded-full flex items-center justify-center group-hover:bg-secondary/20 transition-colors touch-action-manipulation"
+                  >
+                    <i class="fas fa-phone text-secondary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-sm sm:text-base">Telefone</h4>
+                    <p
+                      class="text-gray-600 dark:text-gray-400 text-sm sm:text-base"
+                    >
+                      +55 (62) 98567-8171
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-center space-x-4 group">
+                  <div
+                    class="w-10 h-10 sm:w-12 sm:h-12 bg-secondary/10 rounded-full flex items-center justify-center group-hover:bg-secondary/20 transition-colors touch-action-manipulation"
+                  >
+                    <i class="fas fa-map-marker-alt text-secondary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-sm sm:text-base">
+                      Localização
+                    </h4>
+                    <p
+                      class="text-gray-600 dark:text-gray-400 text-sm sm:text-base"
+                    >
+                      Goiânia, GO - Brasil
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Social Links -->
+              <div
+                class="mt-6 sm:mt-8 pt-6 border-t border-gray-200 dark:border-gray-700"
+              >
+                <h4 class="font-semibold mb-4 text-center text-sm sm:text-base">
+                  Conecte-se Comigo
+                </h4>
+                <div class="flex justify-center space-x-3 sm:space-x-4">
+                  <a
+                    href="https://www.linkedin.com/in/devfelipesilva/"
+                    target="_blank"
+                    rel="noopener"
+                    class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-colors touch-action-manipulation"
+                    aria-label="LinkedIn"
+                  >
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                  <a
+                    href="https://github.com/Felipe-ea/"
+                    target="_blank"
+                    rel="noopener"
+                    class="w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 hover:bg-gray-900 text-white rounded-full flex items-center justify-center transition-colors touch-action-manipulation"
+                    aria-label="GitHub"
+                  >
+                    <i class="fab fa-github"></i>
+                  </a>
+                  <a
+                    href="https://wa.me/5562985678171"
+                    target="_blank"
+                    rel="noopener"
+                    class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-500 to-green-300 hover:from-green-600 hover:to-green-700 text-white rounded-full flex items-center justify-center transition-all touch-action-manipulation"
+                    aria-label="WhatsApp"
+                  >
+                    <i class="fab fa-whatsapp"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer
+        class="bg-gradient-to-r from-slate-900 to-slate-800 text-white py-12 relative z-10"
+      >
+        <div class="items-center max-w-7xl mx-auto px-4 sm:px-6">
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8"
+          >
+            <div class="text-center sm:text-left">
+              <h3 class="text-xl sm:text-2xl font-bold mb-4">Atoms Code</h3>
+              <p class="text-base text-slate-300">
+                Transformando ideias em soluções digitais inovadoras.
+              </p>
+            </div>
+
+            <div class="text-center sm:text-left">
+              <ul class="space-y-2 text-base text-slate-300">
+                <li>Goiânia, GO - Brasil</li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="border-t border-slate-700 pt-8 text-center text-base text-slate-300"
+          >
+            <p>&copy; 2025 Atoms Code. Todos os direitos reservados.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Navigation functionality
+      const navLinks = document.querySelectorAll(".nav-link");
+      const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
+      const navIndicator = document.querySelector(".nav-indicator");
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileSidebar = document.getElementById("mobileSidebar");
+      const mobileSidebarOverlay = document.getElementById(
+        "mobileSidebarOverlay"
+      );
+      let activeNavLink = document.querySelector(".nav-link.active");
+      let activeMobileNavLink = document.querySelector(
+        ".mobile-nav-link.active"
+      );
+
+      // Function to update indicator position
+      function updateIndicator(activeLink) {
+        if (!activeLink || !navIndicator) return;
+
+        const linkRect = activeLink.getBoundingClientRect();
+        const navRect = activeLink.closest(".nav-list").getBoundingClientRect();
+        const offsetLeft = linkRect.left - navRect.left;
+
+        navIndicator.style.width = `${linkRect.width}px`;
+        navIndicator.style.transform = `translateX(${offsetLeft}px)`;
+      }
+
+      // Initialize indicator position
+      if (activeNavLink && navIndicator) {
+        setTimeout(() => updateIndicator(activeNavLink), 100);
+      }
+
+      // Handle desktop navigation clicks
+      function handleNavClick(link) {
+        // Remove active class from all nav links
+        navLinks.forEach((navLink) => navLink.classList.remove("active"));
+        mobileNavLinks.forEach((navLink) => navLink.classList.remove("active"));
+
+        // Add active class to clicked link
+        link.classList.add("active");
+
+        // Find corresponding mobile link and activate it
+        const section = link.getAttribute("data-section");
+        const correspondingMobileLink = document.querySelector(
+          `a.mobile-nav-link[data-section="${section}"]`
+        );
+        if (correspondingMobileLink) {
+          correspondingMobileLink.classList.add("active");
+          activeMobileNavLink = correspondingMobileLink;
+        }
+
+        activeNavLink = link;
+        updateIndicator(activeNavLink);
+
+        // Scroll to section
+        scrollToSection(section);
+      }
+
+      // Handle mobile navigation clicks
+      function handleMobileNavClick(link) {
+        // Remove active class from all nav links
+        navLinks.forEach((navLink) => navLink.classList.remove("active"));
+        mobileNavLinks.forEach((navLink) => navLink.classList.remove("active"));
+
+        // Add active class to clicked link
+        link.classList.add("active");
+
+        // Find corresponding desktop link and activate it
+        const section = link.getAttribute("data-section");
+        const correspondingDesktopLink = document.querySelector(
+          `a.nav-link[data-section="${section}"]`
+        );
+        if (correspondingDesktopLink) {
+          correspondingDesktopLink.classList.add("active");
+          activeNavLink = correspondingDesktopLink;
+          updateIndicator(activeNavLink);
+        }
+
+        activeMobileNavLink = link;
+
+        // Scroll to section and close mobile menu
+        scrollToSection(section);
+        closeMobileMenu();
+      }
+
+      // Mobile menu functions
+      function openMobileMenu() {
+        mobileMenuBtn.classList.add("active");
+        mobileSidebar.classList.add("active");
+        mobileSidebarOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeMobileMenu() {
+        mobileMenuBtn.classList.remove("active");
+        mobileSidebar.classList.remove("active");
+        mobileSidebarOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      // Add click event listeners
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          handleNavClick(link);
+        });
+      });
+
+      mobileNavLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          handleMobileNavClick(link);
+        });
+      });
+
+      // Mobile menu button event listener
+      mobileMenuBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (mobileSidebar.classList.contains("active")) {
+          closeMobileMenu();
+        } else {
+          openMobileMenu();
+        }
+      });
+
+      // Close mobile menu when clicking overlay
+      mobileSidebarOverlay.addEventListener("click", closeMobileMenu);
+
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", (e) => {
+        if (
+          mobileSidebar.classList.contains("active") &&
+          !mobileSidebar.contains(e.target) &&
+          !mobileMenuBtn.contains(e.target)
+        ) {
+          closeMobileMenu();
+        }
+      });
+
+      // Handle window resize
+      window.addEventListener("resize", () => {
+        if (activeNavLink && navIndicator) {
+          updateIndicator(activeNavLink);
+        }
+      });
+
+      // Smooth scroll function
+      function scrollToSection(sectionId) {
+        const target = document.getElementById(sectionId);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+
+      // Intersection Observer for fade-in animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -30px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, observerOptions);
+
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
+
+      // Particle effect
+      function createParticles() {
+        const container = document.getElementById("particles");
+        const isMobile = window.innerWidth < 768;
+        const particleCount = isMobile ? 30 : 60;
+
+        container.innerHTML = ""; // Clear existing particles
+
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement("div");
+          particle.className = "particle";
+
+          const size = Math.random() * (isMobile ? 4 : 6) + 2;
+          particle.style.width = size + "px";
+          particle.style.height = size + "px";
+          particle.style.left = Math.random() * 100 + "%";
+          particle.style.top = Math.random() * 100 + "%";
+          // Randomly choose between cyan, purple, and pink particles
+          const colors = [
+            `rgba(0, 212, 255, ${Math.random() * 0.6 + 0.1})`, // cyan
+            `rgba(108, 92, 231, ${Math.random() * 0.6 + 0.1})`, // purple
+            `rgba(253, 121, 168, ${Math.random() * 0.4 + 0.1})`, // pink
+          ];
+          particle.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+          particle.style.animation = `float ${
+            Math.random() * 4 + 3
+          }s ease-in-out infinite`;
+          particle.style.animationDelay = Math.random() * 2 + "s";
+
+          container.appendChild(particle);
+        }
+      }
+
+      createParticles();
+
+      // Typing animation effect
+      function typeText(element, text, delay = 0) {
+        const letters = text.split("");
+
+        setTimeout(() => {
+          letters.forEach((letter, index) => {
+            const span = document.createElement("span");
+            span.textContent = letter === " " ? "\u00A0" : letter;
+            span.className = "typing-letter";
+            span.style.animationDelay = `${index * 0.05}s`;
+            element.appendChild(span);
+          });
+        }, delay);
+      }
+
+      // Initialize typing animation
+      const text1 = "A inovação que você precisa";
+      const text2 = "está aqui";
+
+      typeText(document.getElementById("typingText1"), text1, 300);
+      typeText(
+        document.getElementById("typingText2"),
+        text2,
+        300 + text1.length * 50
+      );
+
+      // Fade in subtitle and buttons after typing
+      setTimeout(() => {
+        document.getElementById("subtitle").style.transition =
+          "opacity 0.8s ease";
+        document.getElementById("subtitle").style.opacity = "1";
+      }, 300 + (text1.length + text2.length) * 50 + 300);
+
+      setTimeout(() => {
+        document.getElementById("buttons").style.transition =
+          "opacity 0.8s ease";
+        document.getElementById("buttons").style.opacity = "1";
+      }, 300 + (text1.length + text2.length) * 50 + 600);
+
+      // Recreate particles on resize (debounced)
+      let resizeTimer;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          createParticles();
+        }, 250);
+      });
+
+      // Form submission
+      document.querySelector("form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Mensagem enviada com sucesso! Entraremos em contato em breve.");
+        e.target.reset();
+      });
+
+      // Auto-update active menu item based on scroll position
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector("header");
+        const scrollPos = window.scrollY;
+
+        // Add scrolled class to header when scrolling down
+        if (scrollPos > 50) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
+        }
+
+        const sections = document.querySelectorAll("section[id]");
+        const menuScrollPos = scrollPos + 200;
+
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          const sectionId = section.getAttribute("id");
+
+          if (
+            menuScrollPos >= sectionTop &&
+            menuScrollPos < sectionTop + sectionHeight
+          ) {
+            const targetNavLink = document.querySelector(
+              `.nav-link[data-section="${sectionId}"]`
+            );
+            const targetMobileNavLink = document.querySelector(
+              `.mobile-nav-link[data-section="${sectionId}"]`
+            );
+
+            if (targetNavLink && !targetNavLink.classList.contains("active")) {
+              // Remove active from all links
+              navLinks.forEach((link) => link.classList.remove("active"));
+              mobileNavLinks.forEach((link) => link.classList.remove("active"));
+
+              // Add active to current section links
+              targetNavLink.classList.add("active");
+              if (targetMobileNavLink) {
+                targetMobileNavLink.classList.add("active");
+              }
+
+              activeNavLink = targetNavLink;
+              activeMobileNavLink = targetMobileNavLink;
+              updateIndicator(activeNavLink);
+            }
+          }
+        });
+      });
+
+      function redirectToWpp() {
+        const phoneNumber = "5562985678171";
+        const message = "Olá, gostaria de fazer um orçamento!";
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+          message
+        )}`;
+
+        window.location.href = whatsappUrl;
+      }
+
+      function formContact(name, email, assunto, message) {
+        const phoneNumber = "5562985678171";
+        const messageCompleta = `Nome: ${name} 
+        Email: ${email}
+        Assunto: ${assunto} 
+        Mensagem: ${message}`;
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+          messageCompleta
+        )}`;
+
+        window.location.href = whatsappUrl;
+      }
+
+      function redirectToPort() {
+        window.location.href = "https://portifolio-one-black-84.vercel.app/";
+      }
+    </script>
+  </body>
+</html>
