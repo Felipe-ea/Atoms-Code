@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
@@ -12,7 +12,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-<link rel="canonical">
+    <link rel="canonical" href="https://www.atomscode.tech" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap");
 
@@ -51,7 +51,8 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: radial-gradient(
+        background:
+          radial-gradient(
             circle at 20% 80%,
             rgba(253, 121, 168, 0.2) 0%,
             transparent 50%
@@ -73,7 +74,8 @@
       @keyframes backgroundShift {
         0%,
         100% {
-          background: radial-gradient(
+          background:
+            radial-gradient(
               circle at 20% 80%,
               rgba(0, 212, 255, 0.3) 0%,
               transparent 50%
@@ -90,7 +92,8 @@
             );
         }
         33% {
-          background: radial-gradient(
+          background:
+            radial-gradient(
               circle at 60% 30%,
               rgba(253, 121, 168, 0.2) 0%,
               transparent 50%
@@ -107,7 +110,8 @@
             );
         }
         66% {
-          background: radial-gradient(
+          background:
+            radial-gradient(
               circle at 80% 60%,
               rgba(108, 92, 231, 0.3) 0%,
               transparent 50%
@@ -144,7 +148,9 @@
       .fade-in {
         opacity: 0;
         transform: translateY(20px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
+        transition:
+          opacity 0.6s ease,
+          transform 0.6s ease;
       }
 
       .fade-in.visible {
@@ -197,7 +203,8 @@
         backdrop-filter: blur(15px);
         border-radius: 50px;
         padding: 8px 12px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.5),
           inset 0 1px 0 rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(0, 212, 255, 0.2);
       }
@@ -251,7 +258,8 @@
         border-radius: 25px;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1;
-        box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4),
+        box-shadow:
+          0 4px 20px rgba(0, 212, 255, 0.4),
           0 0 0 1px rgba(255, 255, 255, 0.1);
       }
 
@@ -1144,11 +1152,11 @@
       const mobileMenuBtn = document.getElementById("mobileMenuBtn");
       const mobileSidebar = document.getElementById("mobileSidebar");
       const mobileSidebarOverlay = document.getElementById(
-        "mobileSidebarOverlay"
+        "mobileSidebarOverlay",
       );
       let activeNavLink = document.querySelector(".nav-link.active");
       let activeMobileNavLink = document.querySelector(
-        ".mobile-nav-link.active"
+        ".mobile-nav-link.active",
       );
 
       // Function to update indicator position
@@ -1180,7 +1188,7 @@
         // Find corresponding mobile link and activate it
         const section = link.getAttribute("data-section");
         const correspondingMobileLink = document.querySelector(
-          `a.mobile-nav-link[data-section="${section}"]`
+          `a.mobile-nav-link[data-section="${section}"]`,
         );
         if (correspondingMobileLink) {
           correspondingMobileLink.classList.add("active");
@@ -1206,7 +1214,7 @@
         // Find corresponding desktop link and activate it
         const section = link.getAttribute("data-section");
         const correspondingDesktopLink = document.querySelector(
-          `a.nav-link[data-section="${section}"]`
+          `a.nav-link[data-section="${section}"]`,
         );
         if (correspondingDesktopLink) {
           correspondingDesktopLink.classList.add("active");
@@ -1367,21 +1375,27 @@
       typeText(
         document.getElementById("typingText2"),
         text2,
-        300 + text1.length * 50
+        300 + text1.length * 50,
       );
 
       // Fade in subtitle and buttons after typing
-      setTimeout(() => {
-        document.getElementById("subtitle").style.transition =
-          "opacity 0.8s ease";
-        document.getElementById("subtitle").style.opacity = "1";
-      }, 300 + (text1.length + text2.length) * 50 + 300);
+      setTimeout(
+        () => {
+          document.getElementById("subtitle").style.transition =
+            "opacity 0.8s ease";
+          document.getElementById("subtitle").style.opacity = "1";
+        },
+        300 + (text1.length + text2.length) * 50 + 300,
+      );
 
-      setTimeout(() => {
-        document.getElementById("buttons").style.transition =
-          "opacity 0.8s ease";
-        document.getElementById("buttons").style.opacity = "1";
-      }, 300 + (text1.length + text2.length) * 50 + 600);
+      setTimeout(
+        () => {
+          document.getElementById("buttons").style.transition =
+            "opacity 0.8s ease";
+          document.getElementById("buttons").style.opacity = "1";
+        },
+        300 + (text1.length + text2.length) * 50 + 600,
+      );
 
       // Recreate particles on resize (debounced)
       let resizeTimer;
@@ -1424,10 +1438,10 @@
             menuScrollPos < sectionTop + sectionHeight
           ) {
             const targetNavLink = document.querySelector(
-              `.nav-link[data-section="${sectionId}"]`
+              `.nav-link[data-section="${sectionId}"]`,
             );
             const targetMobileNavLink = document.querySelector(
-              `.mobile-nav-link[data-section="${sectionId}"]`
+              `.mobile-nav-link[data-section="${sectionId}"]`,
             );
 
             if (targetNavLink && !targetNavLink.classList.contains("active")) {
@@ -1453,7 +1467,7 @@
         const phoneNumber = "5562985678171";
         const message = "Olá, gostaria de fazer um orçamento!";
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-          message
+          message,
         )}`;
 
         window.location.href = whatsappUrl;
@@ -1466,7 +1480,7 @@
         Assunto: ${assunto} 
         Mensagem: ${message}`;
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-          messageCompleta
+          messageCompleta,
         )}`;
 
         window.location.href = whatsappUrl;
